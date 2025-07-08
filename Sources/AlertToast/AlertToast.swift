@@ -259,16 +259,19 @@ public struct AlertToast: View{
                         EmptyView()
                     }
                     
-                    Text(LocalizedStringKey(title ?? ""))
-                        .font(style?.titleFont ?? Font.headline.bold())
+                    if let title {
+                        Text(LocalizedStringKey(title))
+                            .font(style?.titleFont ?? Font.headline.bold())
+                            .multilineTextAlignment(.leading)
+                    }
                 }
                 
-                if let subTitle = subTitle {
+                if let subTitle {
                     Text(LocalizedStringKey(subTitle))
                         .font(style?.subTitleFont ?? Font.subheadline)
+                        .multilineTextAlignment(.leading)
                 }
             }
-            .multilineTextAlignment(.leading)
             .textColor(style?.titleColor ?? nil)
             .padding()
             .frame(maxWidth: 400, alignment: .leading)
