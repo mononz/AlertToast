@@ -240,30 +240,33 @@ public struct AlertToast: View{
             VStack(alignment: .leading, spacing: 10){
                 if type != .regular || title != nil {
                     HStack{
-                        switch type{
-                        case .complete(let color):
-                            Image(systemName: "checkmark")
-                                .foregroundColor(color)
-                        case .error(let color):
-                            Image(systemName: "xmark")
-                                .foregroundColor(color)
-                        case .systemImage(let name, let color):
-                            Image(systemName: name)
-                                .foregroundColor(color)
-                        case .image(let name, let color):
-                            Image(name)
-                                .renderingMode(.template)
-                                .foregroundColor(color)
-                        case .loading:
-                            ActivityIndicator(color: style?.activityIndicatorColor ?? .white)
-                        case .regular:
-                            // no image
+                        if type != .regular {
+                            switch type{
+                            case .complete(let color):
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(color)
+                            case .error(let color):
+                                Image(systemName: "xmark")
+                                    .foregroundColor(color)
+                            case .systemImage(let name, let color):
+                                Image(systemName: name)
+                                    .foregroundColor(color)
+                            case .image(let name, let color):
+                                Image(name)
+                                    .renderingMode(.template)
+                                    .foregroundColor(color)
+                            case .loading:
+                                ActivityIndicator(color: style?.activityIndicatorColor ?? .white)
+                            case .regular:
+                                EmptyView()
+                            }
                         }
                         
                         if let title {
                             Text(LocalizedStringKey(title))
                                 .font(style?.titleFont ?? Font.headline.bold())
                                 .multilineTextAlignment(.leading)
+                                .textColor(style?.titleColor ?? nil)
                         }
                     }
                 }
@@ -272,9 +275,9 @@ public struct AlertToast: View{
                     Text(LocalizedStringKey(subTitle))
                         .font(style?.subTitleFont ?? Font.subheadline)
                         .multilineTextAlignment(.leading)
+                        .textColor(style?.titleColor ?? nil)
                 }
             }
-            .textColor(style?.titleColor ?? nil)
             .padding()
             .frame(maxWidth: 400, alignment: .leading)
             .alertBackground(style?.backgroundColor ?? nil)
